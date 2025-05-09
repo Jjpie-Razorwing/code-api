@@ -1,0 +1,35 @@
+// === CONFIGURATION ===
+let gameActive = true;  // The game is active by default
+const targetNames = ["Jjpie_razorwing", "Jjpie_razorwing2"];
+const rewardDiamonds = 10000;
+
+// === EVENT: OnPlayerDeath ===
+function onPlayerDeath(victimPlayer, killerPlayer) {
+    // Only trigger if the game is active and the victim is one of the targets
+    if (gameActive && targetNames.includes(victimPlayer.name) && killerPlayer.name !== victimPlayer.name) {
+        
+        // End the game
+        gameActive = false;
+
+        // Reward the killer with diamonds
+        giveDiamonds(killerPlayer, rewardDiamonds);
+
+        // Announce the winner in the chat
+        broadcast(`${killerPlayer.name} killed ${victimPlayer.name} and won ${rewardDiamonds} diamonds!`);
+    }
+}
+
+// === FUNCTION TO REWARD DIAMONDS ===
+function giveDiamonds(player, amount) {
+    // Simulate giving diamonds by adding to the player's balance
+    // In real systems, you would interface with the game's API here
+    player.diamonds += amount;
+}
+
+// === FUNCTION TO BROADCAST MESSAGE ===
+function broadcast(message) {
+    // Broadcast message to all players (you would replace this with actual in-game broadcasting)
+    console.log("[Broadcast] " + message);
+}
+
+
